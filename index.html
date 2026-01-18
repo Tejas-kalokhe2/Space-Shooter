@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2442103608945218"
+     crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AUREUM SENTINEL // TOTAL WAR</title>
+    <title>AUREUM SENTINEL // BATTLE READY</title>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     
@@ -12,32 +15,28 @@
         * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
         body { background: var(--bg); color: white; font-family: 'Orbitron', sans-serif; overflow: hidden; height: 100vh; }
 
-        /* --- UI & CURSOR --- */
+        /* --- DYNAMIC CYBER CURSOR --- */
         #cursor-root { position: fixed; pointer-events: none; z-index: 10000; width: 40px; height: 40px; transform: translate(-50%, -50%); }
         .c-ring { position: absolute; border: 1px solid var(--accent); border-radius: 50%; width: 100%; height: 100%; border-style: dashed; animation: rotate 4s linear infinite; }
         .c-dot { position: absolute; top: 50%; left: 50%; width: 6px; height: 6px; background: white; transform: translate(-50%, -50%); border-radius: 50%; box-shadow: 0 0 15px var(--accent); }
         @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        /* --- AD SLOTS --- */
-        .ad-banner { position: fixed; top: 10px; left: 50%; transform: translateX(-50%); width: 320px; height: 50px; background: #000; border: 1px solid #333; z-index: 100; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #444; }
-
-        /* --- HUD --- */
+        /* --- HUD PANELS --- */
         .hud-panel { position: fixed; background: rgba(0,0,0,0.85); border: 1px solid rgba(0,242,255,0.2); backdrop-filter: blur(10px); padding: 15px; z-index: 100; }
         #stats-panel { bottom: 30px; left: 30px; border-left: 5px solid var(--accent); min-width: 180px; }
-        #boss-panel { top: 80px; left: 50%; transform: translateX(-50%); width: 60%; display: none; text-align: center; }
-        .bar { width: 100%; height: 8px; background: #111; margin-top: 10px; }
+        #boss-panel { top: 30px; left: 50%; transform: translateX(-50%); width: 60%; display: none; text-align: center; }
+        .bar { width: 100%; height: 8px; background: #111; margin-top: 10px; overflow: hidden; }
         .fill { height: 100%; background: var(--accent); transition: 0.2s; }
 
         /* --- SCREENS --- */
-        #hangar, #revive-screen, #ad-overlay { position: fixed; inset: 0; z-index: 2000; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #000; }
-        #ad-overlay { z-index: 5000; display: none; }
-        #revive-screen { background: rgba(0,0,0,0.95); display: none; z-index: 4000; }
+        #hangar, #death-screen { position: fixed; inset: 0; z-index: 2000; display: flex; flex-direction: column; align-items: center; justify-content: center; background: radial-gradient(circle at center, #001a1a 0%, #000 100%); }
+        #death-screen { display: none; background: rgba(10, 0, 0, 0.95); z-index: 4000; }
         
-        .bay { width: 250px; height: 350px; border: 1px solid #333; margin: 15px; padding: 25px; text-align: center; transition: 0.3s; clip-path: polygon(10% 0, 90% 0, 100% 10%, 100% 90%, 90% 100%, 10% 100%, 0 90%, 0 10%); }
-        .bay.selected { border-color: var(--accent); background: rgba(0,242,255,0.05); transform: scale(1.05); }
+        .bay { width: 250px; height: 350px; border: 1px solid #333; margin: 15px; padding: 25px; text-align: center; transition: 0.3s; clip-path: polygon(15% 0, 85% 0, 100% 10%, 100% 90%, 85% 100%, 15% 100%, 0 90%, 0 10%); }
+        .bay.selected { border-color: var(--accent); background: rgba(0,242,255,0.08); transform: scale(1.05); box-shadow: 0 0 30px rgba(0,242,255,0.2); }
         
-        button { background: none; border: 1px solid var(--accent); color: var(--accent); padding: 15px 40px; font-family: 'Orbitron'; cursor: pointer; letter-spacing: 5px; margin: 10px; }
-        button:hover { background: var(--accent); color: black; }
+        button { background: none; border: 1px solid var(--accent); color: var(--accent); padding: 15px 40px; font-family: 'Orbitron'; cursor: pointer; letter-spacing: 5px; transition: 0.3s; }
+        button:hover { background: var(--accent); color: #000; }
 
         #game-viewport { position: fixed; inset: 0; z-index: 5; }
         canvas { display: block; }
@@ -47,41 +46,34 @@
 
     <div id="cursor-root"><div class="c-ring"></div><div class="c-dot"></div></div>
 
-    <div class="ad-banner">ADMOB_BANNER_SLOT_SIMULATED</div>
-
     <div id="hangar">
-        <h1 style="letter-spacing:15px; margin-bottom:40px;">NEURAL_SYNC</h1>
-        <div style="display:flex;">
+        <h1 style="letter-spacing:15px; margin-bottom:40px; text-shadow: 0 0 20px var(--accent);">PILOT_CHASSIS_SYNC</h1>
+        <div style="display:flex; margin-bottom: 20px;">
             <div class="bay selected" id="b0" onclick="pick(0)">
                 <h2 style="color:var(--accent)">AUREUM</h2>
-                <p style="font-size:0.7rem; color:#666; margin-top:30px;">SPD: 150%<br>HP: 400<br>WEAPON: TRIPLE ION</p>
+                <p style="font-size:0.7rem; color:#888; margin-top:30px; line-height:2;">SPEED: 150%<br>HP: 400<br>WEAPON: TRIPLE ION</p>
             </div>
             <div class="bay" id="b1" onclick="pick(1)">
                 <h2 style="color:var(--danger)">CRIMSON</h2>
-                <p style="font-size:0.7rem; color:#666; margin-top:30px;">SPD: 80%<br>HP: 800<br>WEAPON: HEAVY BLAST</p>
+                <p style="font-size:0.7rem; color:#888; margin-top:30px; line-height:2;">SPEED: 80%<br>HP: 800<br>WEAPON: HEAVY BURST</p>
             </div>
         </div>
-        <button onclick="launch()">INITIALIZE MISSION</button>
+        <button onclick="launch()">ENGAGE NEURAL LINK</button>
     </div>
 
-    <div id="revive-screen">
-        <h1 style="color:var(--danger); letter-spacing:10px;">PILOT_DOWN</h1>
-        <p style="margin:20px 0; color:#888;">SYNC LOST. RE-ESTABLISH VIA SPONSORED LINK?</p>
-        <button onclick="showAd()">WATCH AD TO REVIVE</button>
-        <button onclick="location.reload()" style="border-color:#444; color:#444;">ABANDON MISSION</button>
+    <div id="death-screen">
+        <h1 style="color:var(--danger); letter-spacing:10px; margin-bottom:20px;">PILOT_TERMINATED</h1>
+        <p style="color:#666; margin-bottom:30px;">NEURAL CONNECTION SEVERED.</p>
+        <button onclick="location.reload()">RE-SYNC SYSTEM</button>
     </div>
 
-    <div id="ad-overlay">
-        <p style="letter-spacing:5px;">TRANSMITTING SPONSOR DATA...</p>
-        <h1 id="ad-timer" style="font-size:4rem; margin:20px 0; color:var(--accent);">3</h1>
-    </div>
-
-    <div id="hud" style="display:none;">
+    <div id="hud" style="display:none; pointer-events: none;">
         <div id="boss-panel" class="hud-panel">
-            <p style="color:red; font-size:0.7rem; letter-spacing:5px;">THREAT: STAR-EATER</p>
+            <p style="color:red; font-size:0.7rem; letter-spacing:5px;">THREAT: STAR-EATER DETECTED</p>
             <div class="bar"><div id="boss-fill" class="fill" style="background:red; width:100%;"></div></div>
         </div>
         <div id="stats-panel" class="hud-panel">
+            <p style="font-size:0.6rem; color:var(--accent); margin-bottom:5px;">INTEGRITY</p>
             <p id="hp-txt" style="font-size:1.5rem;">100%</p>
             <div class="bar" style="width:180px;"><div id="hp-fill" class="fill"></div></div>
             <p id="score-txt" style="color:var(--gold); margin-top:15px; font-family:'Share Tech Mono';">0000 CR</p>
@@ -93,7 +85,7 @@
     <script>
         const shipData = [{c:"#00f2ff", hp:400, s:0.15}, {c:"#ff2a6d", hp:800, s:0.08}];
         let shipIdx=0, active=false, score=0, curHp=100, maxHp=100, frame=0, invuln=0;
-        let pX=window.innerWidth/2, mX=pX, mobs=[], bullets=[], eb=[], parts=[];
+        let pX=window.innerWidth/2, mX=pX, mobs=[], bullets=[], eb=[], particles=[];
         let boss = { active:false, x:0, hp:15000, max:15000 };
 
         const canvas = document.getElementById('game-canvas');
@@ -109,30 +101,30 @@
             active=true; resize(); loop();
         }
 
-        function shake(amt) { gsap.fromTo(view, {x:-amt, y:amt}, {x:0, y:0, duration:0.05, repeat:4}); }
-
-        function showAd() {
-            document.getElementById('revive-screen').style.display='none';
-            document.getElementById('ad-overlay').style.display='flex';
-            let time = 3;
-            const itv = setInterval(() => {
-                time--; document.getElementById('ad-timer').innerText = time;
-                if(time<=0) { clearInterval(itv); revive(); }
-            }, 1000);
+        function shake(intensity) {
+            gsap.fromTo(view, {x: -intensity, y: intensity}, {x: 0, y: 0, duration: 0.05, repeat: 4});
         }
 
-        function revive() {
-            document.getElementById('ad-overlay').style.display='none';
-            curHp = maxHp; active = true; loop();
+        function createExplosion(x, y, color) {
+            for(let i=0; i<12; i++) {
+                particles.push({
+                    x, y, 
+                    vx: (Math.random()-0.5)*10, 
+                    vy: (Math.random()-0.5)*10, 
+                    life: 1.0, 
+                    color: color
+                });
+            }
         }
 
         function spawn() {
-            const t = [
+            const types = [
                 {c:'#00ffaa', hp:3, s:4, type:'swarmer'},
                 {c:'#ffaa00', hp:10, s:2, type:'raider'},
-                {c:'#ff00ff', hp:6, s:1, type:'sniper'}
-            ][Math.floor(Math.random()*3)];
-            mobs.push({x:Math.random()*canvas.width, y:-50, ...t, vx:(Math.random()-0.5)*5});
+                {c:'#ff00ff', hp:6, s:5, type:'sniper'}
+            ];
+            let mob = types[Math.floor(Math.random()*types.length)];
+            mobs.push({x:Math.random()*canvas.width, y:-50, ...mob, vx:(Math.random()-0.5)*6});
         }
 
         function loop() {
@@ -142,34 +134,53 @@
             const s = shipData[shipIdx];
             pX += (mX - pX) * s.s;
 
-            // TRIPLE FIRE
-            if(frame % 7 === 0) [0,-3,3].forEach(v => bullets.push({x:pX, y:canvas.height-80, vx:v}));
+            // TRIPLE AUTO-FIRE
+            if(frame % 7 === 0) [0,-4,4].forEach(v => bullets.push({x:pX, y:canvas.height-80, vx:v}));
 
-            // MOB SPAWNING
-            if(!boss.active && frame % 35 === 0) spawn();
-            if(score >= 3000 && !boss.active) { boss.active=true; document.getElementById('boss-panel').style.display='block'; shake(30); }
+            // SPAWNING
+            if(!boss.active && frame % 40 === 0) spawn();
+            if(score >= 4000 && !boss.active) { 
+                boss.active=true; 
+                document.getElementById('boss-panel').style.display='block'; 
+                shake(30);
+            }
 
-            // PROJECTILES & COLLISIONS
+            // PARTICLES
+            particles.forEach((p, i) => {
+                p.x += p.vx; p.y += p.vy; p.life -= 0.02;
+                ctx.globalAlpha = p.life; ctx.fillStyle = p.color;
+                ctx.fillRect(p.x, p.y, 3, 3);
+                if(p.life <= 0) particles.splice(i, 1);
+            });
+            ctx.globalAlpha = 1;
+
+            // BULLETS
             bullets.forEach((b,i) => {
-                b.y -= 18; b.x += b.vx; ctx.fillStyle = s.c; ctx.fillRect(b.x-2, b.y, 4, 18);
+                b.y -= 18; b.x += b.vx; ctx.fillStyle = s.c; ctx.fillRect(b.x-2, b.y, 4, 20);
                 mobs.forEach((m,mi) => {
                     if(Math.abs(b.x-m.x)<35 && Math.abs(b.y-m.y)<35) {
                         m.hp--; bullets.splice(i,1);
-                        if(m.hp<=0) { score+=100; mobs.splice(mi,1); shake(5); }
+                        if(m.hp<=0) { 
+                            createExplosion(m.x, m.y, m.c);
+                            score+=100; mobs.splice(mi,1); shake(5); 
+                        }
                     }
                 });
-                if(boss.active && Math.abs(b.x-boss.x)<160 && b.y < 180) { boss.hp -= 30; bullets.splice(i,1); }
+                if(boss.active && Math.abs(b.x-boss.x)<160 && b.y < 180) { 
+                    boss.hp -= 30; bullets.splice(i,1); 
+                    createExplosion(b.x, b.y, "white");
+                }
             });
 
-            // MOBS & EB
-            mobs.forEach((m,i) => {
+            // MOBS & PROJECTILES
+            mobs.forEach(m => { 
                 m.y += m.s; m.x += m.vx; if(m.x<0 || m.x>canvas.width) m.vx *= -1;
                 ctx.strokeStyle = m.c; ctx.lineWidth=2; ctx.strokeRect(m.x-15, m.y-15, 30, 30);
                 if(frame % 90 === 0) eb.push({x:m.x, y:m.y, s:7});
             });
 
             eb.forEach((b,i) => {
-                b.y += b.s; ctx.fillStyle = "red"; ctx.fillRect(b.x-2, b.y, 4, 12);
+                b.y += b.s; ctx.fillStyle = "red"; ctx.fillRect(b.x-2, b.y, 4, 15);
                 if(Math.abs(b.x-pX)<45 && b.y > canvas.height-85 && invuln===0) {
                     curHp -= 50; invuln=60; eb.splice(i,1); shake(25);
                 }
@@ -177,25 +188,27 @@
 
             // BOSS
             if(boss.active) {
-                boss.x = canvas.width/2 + Math.sin(frame/40)*250;
-                ctx.strokeStyle = "red"; ctx.lineWidth=3; ctx.strokeRect(boss.x-150, 40, 300, 120);
-                if(frame % 20 === 0) eb.push({x: boss.x + (Math.random()-0.5)*350, y:160, s:8});
+                boss.x = canvas.width/2 + Math.sin(frame/45)*280;
+                ctx.strokeStyle = "red"; ctx.lineWidth=4; ctx.strokeRect(boss.x-160, 40, 320, 130);
+                ctx.fillStyle = "rgba(255,0,0,0.1)"; ctx.fillRect(boss.x-160, 40, 320, 130);
                 document.getElementById('boss-fill').style.width = (boss.hp/boss.max)*100 + "%";
+                if(frame % 20 === 0) eb.push({x: boss.x + (Math.random()-0.5)*350, y:170, s:8});
+                if(boss.hp <= 0) { alert("VOID CONQUERED. MISSION SUCCESS."); location.reload(); }
             }
 
-            // PLAYER RENDER
+            // PLAYER
             if(invuln % 10 < 5) {
-                ctx.fillStyle = s.c; ctx.shadowBlur=15; ctx.shadowColor=s.c;
-                ctx.beginPath(); ctx.moveTo(pX, canvas.height-95); ctx.lineTo(pX-35, canvas.height-35); ctx.lineTo(pX+35, canvas.height-35); ctx.fill();
+                ctx.shadowBlur=15; ctx.shadowColor=s.c; ctx.fillStyle = s.c;
+                ctx.beginPath(); ctx.moveTo(pX, canvas.height-95); ctx.lineTo(pX-40, canvas.height-30); ctx.lineTo(pX+40, canvas.height-30); ctx.fill();
                 ctx.shadowBlur=0;
             }
 
-            // HUD UPDATES
+            // UI
             document.getElementById('hp-fill').style.width = (curHp/maxHp)*100 + "%";
             document.getElementById('hp-txt').innerText = Math.max(0, Math.round((curHp/maxHp)*100)) + "%";
             document.getElementById('score-txt').innerText = score.toString().padStart(4, '0') + " CR";
 
-            if(curHp <= 0) { active=false; document.getElementById('revive-screen').style.display='flex'; }
+            if(curHp <= 0) { active=false; document.getElementById('death-screen').style.display='flex'; }
             requestAnimationFrame(loop);
         }
 
@@ -203,7 +216,11 @@
             mX = e.clientX;
             gsap.to("#cursor-root", { left: e.clientX, top: e.clientY, duration: 0.1 });
         });
-        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+
+        function resize() { 
+            canvas.width = window.innerWidth; 
+            canvas.height = window.innerHeight; 
+        }
         window.addEventListener('resize', resize);
     </script>
 </body>
